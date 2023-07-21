@@ -1,24 +1,79 @@
-import logo from './logo.svg';
-import './App.css';
+import "./App.css";
+import React from "react";
+import algoliasearch from "algoliasearch/lite";
+import {
+  InstantSearch,
+  RefinementList,
+  useRefinementList,
+  useInfiniteHits,
+} from "react-instantsearch-hooks-web";
+import { createInfiniteHitsSessionStorageCache } from "instantsearch.js/es/lib/infiniteHitsCache";
 
-function App() {
+const sessionStorageCache = createInfiniteHitsSessionStorageCache();
+
+const searchClient = algoliasearch(
+  "BCXURW325T",
+  "9a9be1d80cc0544864f653dc5e181b91"
+);
+
+function Hit({ hit }) {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      <div className="col-12 col-md-4 col-lg-4 application" data-assignment="">
+        <div className="application-wrapper">
+          <a href={hit?.SettingVariantCode}>
+            <img src={hit?.SettingVariantHeroImageURL} />
+            <p>{hit?.SettingName}</p>
+          </a>
+        </div>
+      </div>
+    </>
+  );
+}
+
+function List({ item }) {
+  return (
+    <>
+      <label>
+        <input type="checkbox" className="radio" value={item?.value} />
+        <span>{item?.label}</span>
+      </label>
+    </>
+  );
+}
+
+function CustomRefinementList(props) {
+  const { items, refine } = useRefinementList({
+    attribute: 'TocAssignment',
+  });
+
+  return Object.entries(items).map(([key, value]) => <List item={value} />);
+}
+
+function CustomInfiniteHits(props) {
+  const { hits, isLastPage, showMore } = useInfiniteHits(props);
+
+  return Object.entries(hits).map(([key, value]) => <Hit hit={value} />);
+}
+
+function App(props) {
+  return (
+    <InstantSearch
+      indexName="steelcase_sandbox_settings"
+      searchClient={searchClient}
+    >
+      <div className="col-12 col-lg-3 category-nav">
+        <h3 className="open">Application</h3>
+        <div className="filter-group">
+          <RefinementList attribute="TocAssignment" />
+        </div>
+      </div>
+      <main className="col-12 col-lg-9 content">
+        <div className="row">
+          <CustomInfiniteHits {...props} />
+        </div>
+      </main>
+    </InstantSearch>
   );
 }
 
