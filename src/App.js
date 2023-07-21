@@ -9,9 +9,6 @@ import {
   useRefinementList,
   useInfiniteHits,
 } from "react-instantsearch-hooks-web";
-// import { createInfiniteHitsSessionStorageCache } from "instantsearch.js/es/lib/infiniteHitsCache";
-
-// const sessionStorageCache = createInfiniteHitsSessionStorageCache();
 
 const searchClient = algoliasearch(
   "BCXURW325T",
@@ -31,25 +28,6 @@ function Hit({ hit }) {
       </div>
     </>
   );
-}
-
-function List({ item }) {
-  return (
-    <>
-      <label>
-        <input type="checkbox" className="radio" value={item?.value} />
-        <span>{item?.label}</span>
-      </label>
-    </>
-  );
-}
-
-function CustomRefinementList(props) {
-  const { items, refine } = useRefinementList({
-    attribute: "TocAssignment",
-  });
-
-  return Object.entries(items).map(([key, value]) => <List item={value} />);
 }
 
 function CustomInfiniteHits(props) {

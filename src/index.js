@@ -2,8 +2,9 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import "./index.css";
 import App from "./App";
+import Variant from "./Components/Variant";
 import reportWebVitals from "./reportWebVitals";
-import { BrowserRouter } from "react-router-dom";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
@@ -11,8 +12,11 @@ root.render(
     <section class="products-main">
       <div class="container">
         <div class="row">
-          <BrowserRouter>
-            <App />
+          <BrowserRouter basename="/sc-app-config">
+            <Routes>
+              <Route path="/" element={<App />}></Route>
+              <Route path="/app/:variantId" element={<Variant />}></Route>
+            </Routes>
           </BrowserRouter>
         </div>
       </div>
