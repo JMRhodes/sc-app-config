@@ -1,15 +1,17 @@
 import "./App.css";
 import React from "react";
+import { Link } from "react-router-dom";
 import algoliasearch from "algoliasearch/lite";
 import {
   InstantSearch,
+  CurrentRefinements,
   RefinementList,
   useRefinementList,
   useInfiniteHits,
 } from "react-instantsearch-hooks-web";
-import { createInfiniteHitsSessionStorageCache } from "instantsearch.js/es/lib/infiniteHitsCache";
+// import { createInfiniteHitsSessionStorageCache } from "instantsearch.js/es/lib/infiniteHitsCache";
 
-const sessionStorageCache = createInfiniteHitsSessionStorageCache();
+// const sessionStorageCache = createInfiniteHitsSessionStorageCache();
 
 const searchClient = algoliasearch(
   "BCXURW325T",
@@ -21,10 +23,10 @@ function Hit({ hit }) {
     <>
       <div className="col-12 col-md-4 col-lg-4 application" data-assignment="">
         <div className="application-wrapper">
-          <a href={hit?.SettingVariantCode}>
+          <Link to={`/app/${hit?.SettingVariantCode}`}>
             <img src={hit?.SettingVariantHeroImageURL} />
             <p>{hit?.SettingName}</p>
-          </a>
+          </Link>
         </div>
       </div>
     </>
@@ -44,7 +46,7 @@ function List({ item }) {
 
 function CustomRefinementList(props) {
   const { items, refine } = useRefinementList({
-    attribute: 'TocAssignment',
+    attribute: "TocAssignment",
   });
 
   return Object.entries(items).map(([key, value]) => <List item={value} />);
@@ -64,6 +66,7 @@ function App(props) {
     >
       <div className="col-12 col-lg-3 category-nav">
         <h3 className="open">Application</h3>
+        <CurrentRefinements includedAttributes={["TocAssignment"]} />
         <div className="filter-group">
           <RefinementList attribute="TocAssignment" />
         </div>
