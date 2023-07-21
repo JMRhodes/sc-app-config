@@ -9,13 +9,16 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
-    <section class="products-main">
-      <div class="container">
-        <div class="row">
+    <section className="products-main">
+      <div className="container">
+        <div className="row">
           <BrowserRouter basename="/sc-app-config">
             <Routes>
               <Route path="/" element={<App />}></Route>
-              <Route path="/app/:variantId" element={<Variant />}></Route>
+              <Route
+                path="/app/:variantId"
+                element={<Variant />}
+              ></Route>
             </Routes>
           </BrowserRouter>
         </div>

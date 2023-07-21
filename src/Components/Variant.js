@@ -1,8 +1,7 @@
 import React from "react";
+import { useParams } from "react-router-dom";
 import algoliasearch from "algoliasearch/lite";
-import {
-  InstantSearch,
-} from "react-instantsearch-hooks-web";
+import { InstantSearch, Hits, Configure } from "react-instantsearch-hooks-web";
 
 const searchClient = algoliasearch(
   "BCXURW325T",
@@ -10,6 +9,8 @@ const searchClient = algoliasearch(
 );
 
 function Variant(props) {
+  let { variantId } = useParams();
+
   return (
     <InstantSearch
       indexName="steelcase_sandbox_settings"
@@ -17,7 +18,8 @@ function Variant(props) {
     >
       <main className="col-12 content">
         <div className="row">
-          Variant Single View
+          <Configure query={variantId} />
+          <Hits />
         </div>
       </main>
     </InstantSearch>
