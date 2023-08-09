@@ -8,6 +8,7 @@ import {
   useHits,
 } from "react-instantsearch-hooks-web";
 import AppHeader from "./../Components/AppHeader";
+import VariantFilters from "./../Components/VariantFilters";
 
 const searchClient = algoliasearch(
   "BCXURW325T",
@@ -16,18 +17,21 @@ const searchClient = algoliasearch(
 
 function View({ hit }) {
   const VisualizationJson = JSON.parse(hit?.VisualizationJson);
-  
+
   return (
     <>
       <div className="row">
         <AppHeader name={hit?.SettingName} />
         <div className="col-12 application" data-assignment="">
           <div className="application-wrapper">{hit?.SettingName}</div>
-          <div
-            className="two-d-image"
-            alt="image of Small Meeting Room 3 configuration"
-            style={{backgroundImage: `url(${VisualizationJson.renderURL})`}}
-          ></div>
+          <div className="row">
+            <div className="col-12 col-md-6">
+              <img src={VisualizationJson.renderURL} />
+            </div>
+            <div className="col-12 col-md-4 offset-md-2">
+              <VariantFilters />
+            </div>
+          </div>
         </div>
       </div>
     </>

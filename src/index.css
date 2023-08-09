@@ -38,3 +38,8 @@ code {
   height: 500px;
   width: 500px;
 }
+
+.application img {
+  width: 100%;
+  height: auto;
+}
